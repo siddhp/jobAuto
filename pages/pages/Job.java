@@ -62,7 +62,7 @@ public class Job extends CommonFunctions implements Job_OR {
 	}
 
 	public void test() {
-		if (refreshUntilCondition(jobLocator, 30)) {
+		if (refreshUntilCondition(jobLocator, 15)) {
 			scrollToElement(jobLocator);
 			Result.logInfo("Found job: ", true);
 
