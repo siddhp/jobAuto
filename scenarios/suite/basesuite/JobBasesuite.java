@@ -2,6 +2,7 @@ package suite.basesuite;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.ITestResult;
@@ -9,9 +10,9 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
-import utils.BaseSuite;
-import utils.Result;
+import pages.Result;
 
 public class JobBasesuite extends BaseSuite {
 
@@ -26,10 +27,10 @@ public class JobBasesuite extends BaseSuite {
 			conn.setConnectTimeout(3000);
 			conn.connect();
 			int responseCode = conn.getResponseCode();
-			System.out.println("🔍 Debug Port Check: HTTP " + responseCode);
+			System.out.println("Debug Port Check: HTTP " + responseCode);
 			return responseCode == 200;
 		} catch (Exception e) {
-			System.err.println("⚠️ Debug Port Connection Failed: " + e.getMessage());
+			System.err.println(" Debug Port Connection Failed: " + e.getMessage());
 			return false;
 		}
 	}
@@ -50,18 +51,18 @@ public class JobBasesuite extends BaseSuite {
 			WebDriverManager.chromedriver().setup();
 
 			if (!isChromeDebugPortActive()) {
-				System.err.println("❌ Chrome debugging is NOT running on port 9222.");
-				System.err.println("👉 Please start Chrome with your .bat file first.");
+				System.err.println("Chrome debugging is NOT running on port 9222.");
+				System.err.println("Please start Chrome with your .bat file first.");
 				return;
 			}
 
 			ChromeOptions options = new ChromeOptions();
 			options.setExperimentalOption("debuggerAddress", DEBUG_ADDRESS);
 			driver = new ChromeDriver(options);
-			System.out.println("✅ Attached to existing Chrome session successfully!");
+			System.out.println("Attached to existing Chrome session successfully!");
 			driver.manage().window().maximize();
 		} catch (Exception e) {
-			System.err.println("⚠️ Could not attach to Chrome session: " + e.getMessage());
+			System.err.println("Could not attach to Chrome session: " + e.getMessage());
 		}
 	}
 
@@ -69,16 +70,16 @@ public class JobBasesuite extends BaseSuite {
 	public void ensureDriverActive() {
 		try {
 			if (driver == null) {
-				System.out.println("🔁 Driver was null, re-attaching...");
+				System.out.println("Driver was null, re-attaching...");
 				attachToChrome();
 				return;
 			}
 			driver.getTitle(); // lightweight health check
 		} catch (org.openqa.selenium.NoSuchSessionException e) {
-			System.err.println("💀 ChromeDriver session lost. Re-attaching...");
+			System.err.println("ChromeDriver session lost. Re-attaching...");
 			attachToChrome();
 		} catch (Exception e) {
-			System.err.println("⚠️ Driver check error: " + e.getMessage());
+			System.err.println("Driver check error: " + e.getMessage());
 		}
 	}
 
@@ -96,7 +97,7 @@ public class JobBasesuite extends BaseSuite {
 				driver.close(); // just close WebDriver connection
 			}
 		} catch (Exception e) {
-			System.err.println("⚠️ TearDown issue: " + e.getMessage());
+			System.err.println("TearDown issue: " + e.getMessage());
 		} finally {
 			Result.flushReport();
 		}

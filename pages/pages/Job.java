@@ -1,13 +1,14 @@
 package pages;
 
 import java.time.Duration;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import pages.constants.WaitType;
 import suite.basesuite.JobBasesuite;
-import utils.Result;
 
 public class Job extends CommonFunctions implements Job_OR {
 
@@ -19,19 +20,19 @@ public class Job extends CommonFunctions implements Job_OR {
 		long start = System.currentTimeMillis();
 		long maxRunMillis = 6L * 60 * 60 * 1000; // run up to 6 hours
 
-		Result.logInfo("🚀 Starting refresh loop — every " + intervalSeconds + " s", true);
+		Result.logInfo("Starting refresh loop — every " + intervalSeconds + " s", true);
 
 		while (System.currentTimeMillis() - start < maxRunMillis) {
 			try {
 				base.ensureDriverActive(); // 🩺 check & re-attach if needed
 
 				if (isElementVisible(stopLocator, 3)) {
-					Result.logPass("🛑 Stop condition found! Exiting loop.", true);
+					Result.logPass("Stop condition found! Exiting loop.", true);
 					return true;
 				}
 
 				driver.navigate().refresh();
-				Result.logInfo("🔄 Page refreshed", false);
+				Result.logInfo("Page refreshed", false);
 
 				if (isElementVisible(all, 40)) {
 					click(all);
@@ -39,14 +40,14 @@ public class Job extends CommonFunctions implements Job_OR {
 
 				Thread.sleep(intervalMillis);
 			} catch (org.openqa.selenium.NoSuchSessionException e) {
-				Result.logFail("💀 Lost driver session, reconnecting...", true);
+				Result.logFail("Lost driver session, reconnecting...", true);
 				base.ensureDriverActive();
 			} catch (Exception e) {
-				Result.logFail("⚠️ Loop error: " + e.getMessage(), true);
+				Result.logFail("Loop error: " + e.getMessage(), true);
 			}
 		}
 
-		Result.logInfo("⏰ Max loop time reached, exiting.", true);
+		Result.logInfo("Max loop time reached, exiting.", true);
 		return false;
 	}
 
@@ -85,7 +86,7 @@ public class Job extends CommonFunctions implements Job_OR {
 			if (waitForElement(continueBtn, 60, WaitType.VISIBLE))
 				click(continueBtn);
 			pause(30);
-			Result.logInfo("✅ Job Applied.", true);
+			Result.logInfo("Job Applied.", true);
 			closeCurrentWindowAndSwitchTo(globalHandle);
 		}
 	}

@@ -13,12 +13,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import pages.constants.WaitType;
-import utils.BaseSuite;
-import utils.Result;
+import suite.basesuite.BaseSuite;
 
 public class CommonFunctions extends BaseSuite {
 
-	// ✅ Get WebElement with logging
+	// Get WebElement with logging
 	public WebElement getWebElement(By locator) {
 		try {
 			WebElement element = driver.findElement(locator);
@@ -281,7 +280,7 @@ public class CommonFunctions extends BaseSuite {
 		try {
 			Set<String> oldWindows = driver.getWindowHandles();
 			click(locator);
-			Result.logInfo("🖱️ Clicked element: " + locator, true);
+			Result.logInfo("Clicked element: " + locator, true);
 
 			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
 			wait.until(driver -> driver.getWindowHandles().size() > oldWindows.size());
@@ -291,10 +290,10 @@ public class CommonFunctions extends BaseSuite {
 			newHandle = newWindows.iterator().next();
 
 			driver.switchTo().window(newHandle);
-			Result.logPass("🆕 Switched to new window: " + newHandle, true);
+			Result.logPass("Switched to new window: " + newHandle, true);
 
 		} catch (Exception e) {
-			Result.logFail("⚠️ Failed to switch to new tab: " + e.getMessage(), true);
+			Result.logFail("Failed to switch to new tab: " + e.getMessage(), true);
 		}
 		return newHandle;
 	}
@@ -307,7 +306,7 @@ public class CommonFunctions extends BaseSuite {
 			String currentHandle = driver.getWindowHandle();
 			driver.switchTo().window(windowHandle);
 			driver.close();
-			Result.logInfo("❎ Closed window with handle: " + windowHandle, true);
+			Result.logInfo("Closed window with handle: " + windowHandle, true);
 
 			// Switch back to a valid remaining window
 			Set<String> remainingWindows = driver.getWindowHandles();
@@ -317,7 +316,7 @@ public class CommonFunctions extends BaseSuite {
 				driver.switchTo().window(remainingWindows.iterator().next());
 			}
 		} catch (Exception e) {
-			Result.logFail("⚠️ Failed to close window by handle: " + e.getMessage(), true);
+			Result.logFail("Failed to close window by handle: " + e.getMessage(), true);
 		}
 	}
 
@@ -327,10 +326,10 @@ public class CommonFunctions extends BaseSuite {
 	public String getCurrentWindowHandle() {
 		try {
 			String handle = driver.getWindowHandle();
-			Result.logInfo("🪟 Current window handle: " + handle, true);
+			Result.logInfo("Current window handle: " + handle, true);
 			return handle;
 		} catch (Exception e) {
-			Result.logFail("⚠️ Could not retrieve window handle: " + e.getMessage(), true);
+			Result.logFail("Could not retrieve window handle: " + e.getMessage(), true);
 			return null;
 		}
 	}
@@ -338,8 +337,9 @@ public class CommonFunctions extends BaseSuite {
 	/**
 	 * Closes the current active window/tab and switches to the given window handle.
 	 *
-	 * @param targetWindowHandle The handle (ID) of the window to switch to after
-	 *                           closing the current one.
+	 * @param targetWindowHandle
+	 *            The handle (ID) of the window to switch to after
+	 *            closing the current one.
 	 */
 	public void closeCurrentWindowAndSwitchTo(String targetWindowHandle) {
 		try {
@@ -348,26 +348,26 @@ public class CommonFunctions extends BaseSuite {
 
 			// Close the current window
 			driver.close();
-			Result.logInfo("❎ Closed current window: " + currentHandle, true);
+			Result.logInfo("Closed current window: " + currentHandle, true);
 
 			// Switch to the target window if it still exists
 			Set<String> remainingWindows = driver.getWindowHandles();
 			if (remainingWindows.contains(targetWindowHandle)) {
 				driver.switchTo().window(targetWindowHandle);
-				Result.logPass("🔄 Switched to target window: " + targetWindowHandle, true);
+				Result.logPass("Switched to target window: " + targetWindowHandle, true);
 			} else {
 				// If the target window no longer exists, switch to any remaining one
 				if (!remainingWindows.isEmpty()) {
 					String fallbackHandle = remainingWindows.iterator().next();
 					driver.switchTo().window(fallbackHandle);
-					Result.logInfo("⚠️ Target window not found. Switched to remaining window: " + fallbackHandle, true);
+					Result.logInfo("Target window not found. Switched to remaining window: " + fallbackHandle, true);
 				} else {
-					Result.logFail("⚠️ No remaining windows to switch to after closing current one!", true);
+					Result.logFail("No remaining windows to switch to after closing current one!", true);
 				}
 			}
 
 		} catch (Exception e) {
-			Result.logFail("⚠️ Failed to close current window or switch: " + e.getMessage(), true);
+			Result.logFail("Failed to close current window or switch: " + e.getMessage(), true);
 		}
 	}
 

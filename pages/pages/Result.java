@@ -1,4 +1,4 @@
-package utils;
+package pages;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,10 +12,13 @@ import org.testng.ITestResult;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.model.Media;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-import com.aventstack.extentreports.MediaEntityBuilder;
+
+import suite.basesuite.BaseSuite;
+
 public class Result extends BaseSuite {
 	private static ExtentReports extent;
 	private static ExtentTest test;

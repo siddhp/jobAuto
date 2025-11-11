@@ -1,4 +1,4 @@
-package utils;
+package suite.basesuite;
 
 import org.openqa.selenium.WebDriver;
 
