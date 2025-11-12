@@ -18,7 +18,7 @@ public class Job extends CommonFunctions implements Job_OR {
 	public boolean refreshUntilCondition(By stopLocator, int intervalSeconds) {
 		long intervalMillis = intervalSeconds * 1000L;
 		long start = System.currentTimeMillis();
-		long maxRunMillis = 6L * 60 * 60 * 1000; // run up to 6 hours
+		long maxRunMillis = 10L * 60 * 60 * 1000; // run up to 6 hours
 
 		Result.logInfo("Starting refresh loop — every " + intervalSeconds + " s", true);
 
@@ -33,10 +33,6 @@ public class Job extends CommonFunctions implements Job_OR {
 
 				driver.navigate().refresh();
 				Result.logInfo("Page refreshed", false);
-
-				if (isElementVisible(all, 40)) {
-					click(all);
-				}
 
 				Thread.sleep(intervalMillis);
 			} catch (org.openqa.selenium.NoSuchSessionException e) {
@@ -62,7 +58,7 @@ public class Job extends CommonFunctions implements Job_OR {
 	}
 
 	public void test() {
-		if (refreshUntilCondition(jobLocator, 15)) {
+		if (refreshUntilCondition(jobLocator, 3)) {
 			scrollToElement(jobLocator);
 			Result.logInfo("Found job: ", true);
 
@@ -73,16 +69,15 @@ public class Job extends CommonFunctions implements Job_OR {
 
 			if (waitForElement(applyButton, 60, WaitType.VISIBLE))
 				clickAndSwitchToNewTab(applyButton, 20);
-			if (waitForElement(nextButton, 60, WaitType.VISIBLE)) {
-				pause(6);
-				click(nextButton);
-			}
+
 			if (waitForElement(createApplication, 60, WaitType.CLICKABLE)) {
-				pause(6);
+				pause(3);
 				click(createApplication);
 			}
-			if (waitForElement(noButton, 60, WaitType.VISIBLE))
+			if (waitForElement(noButton, 60, WaitType.VISIBLE)) {
+				pause(1);
 				click(noButton);
+			}
 			if (waitForElement(continueBtn, 60, WaitType.VISIBLE))
 				click(continueBtn);
 			pause(30);

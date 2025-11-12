@@ -10,7 +10,7 @@ echo.
 echo ==========================================================
 echo [STEP 3] Running Maven tests
 echo ==========================================================
-mvn test -Dfile=DellSuiteRun.xml
+mvn test -Dfile=run.xml
 
 echo.
 echo ==========================================================
