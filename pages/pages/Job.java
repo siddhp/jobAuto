@@ -68,10 +68,10 @@ public class Job extends CommonFunctions implements Job_OR {
 			String globalHandle = getCurrentWindowHandle();
 
 			if (waitForElement(applyButton, 60, WaitType.VISIBLE))
-				clickAndSwitchToNewTab(applyButton, 20);
+				clickAndSwitchToNewTab(applyButton, 10);
 
 			if (waitForElement(createApplication, 60, WaitType.CLICKABLE)) {
-				pause(3);
+				pause(1);
 				click(createApplication);
 			}
 			if (waitForElement(noButton, 60, WaitType.VISIBLE)) {
