@@ -4,7 +4,9 @@ import org.openqa.selenium.By;
 
 public interface Job_OR {
 
-	By jobLocator = By.xpath("//div[@data-test-id='JobCard']");
+	By specificLocation = By.xpath("//div[@data-test-component='StencilText']/strong[contains(text(),'%s')]");
+
+//	By jobLocator = By.xpath("//div[@data-test-id='JobCard']");
 	By selectSchedule = By.xpath("//button[@data-test-id='jobDetailSelectScheduleButton']");
 	By applyButton = By.xpath("//button[@data-test-id='ScheduleCardSelectScheduleLink']");
 	By nextButton = By.xpath("//button/div[text()='Next']");

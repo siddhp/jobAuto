@@ -58,11 +58,11 @@ public class Job extends CommonFunctions implements Job_OR {
 	}
 
 	public void test() {
-		if (refreshUntilCondition(jobLocator, 3)) {
-			scrollToElement(jobLocator);
+		if (refreshUntilCondition(specificLocation, 3)) {
+			scrollToElement(specificLocation);
 			Result.logInfo("Found job: ", true);
 
-			click(jobLocator);
+			click(specificLocation);
 			if (waitForElement(selectSchedule, 60, WaitType.VISIBLE))
 				click(selectSchedule);
 			String globalHandle = getCurrentWindowHandle();
